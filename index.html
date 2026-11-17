@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KGFOOTBALLTV AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d18;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:linear-gradient(135deg,#101d38,#172d55);border-bottom:2px solid #168cff}
+.logo{font-size:26px;font-weight:900}
+.logo span{color:#168cff}
+header p{color:#aebbd0;font-size:13px}
+main{max-width:760px;margin:22px auto;padding:0 14px}
+.panel{background:#111a2b;border:1px solid #263b5d;border-radius:15px;padding:17px;margin-bottom:15px}
+h2{font-size:19px;margin:0 0 15px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+button,select{cursor:pointer}
+.tab{padding:12px 4px;background:#14233b;color:white;border:1px solid #29456c;border-radius:9px;font-weight:bold}
+.tab.active{background:#087eea}
+label{display:block;margin:15px 0 7px;color:#b8c8df;font-size:13px}
+textarea,select{width:100%;background:#091323;color:white;border:1px solid #304664;border-radius:9px;padding:13px;font-size:15px}
+textarea{min-height:150px}
+.primary{width:100%;padding:15px;border:0;border-radius:9px;background:#087eea;color:white;font-weight:bold;font-size:16px;margin-top:15px}
+.secondary{padding:11px 16px;background:#172944;color:white;border:1px solid #3c5c85;border-radius:9px}
+.output{min-height:120px;white-space:pre-wrap;line-height:1.6;color:#e5edfa}
+.small{font-size:12px;color:#8193ad;line-height:1.5}
+footer{text-align:center;color:#687b99;padding:20px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">KG<span>FOOTBALL</span>TV AI</div>
+<p>Футбол жаңылыктары үчүн жасалма интеллект жардамчысы</p>
+</header>
+<main>
+<div class="panel">
+<h2>⚽ Контент даярдоо</h2>
+<div class="tabs">
+<button class="tab active" onclick="setMode('translate',this)">🇰🇬 Котормо</button>
+<button class="tab" onclick="setMode('reels',this)">🎬 Reels</button>
+<button class="tab" onclick="setMode('post',this)">📰 Пост</button>
+</div>
+<label>Текстти киргиз</label>
+<textarea id="source" placeholder="Футбол жаңылыгын ушул жерге кой..."></textarea>
+<div id="options">
+<label>Котормо тили</label>
+<select id="option"><option>Кыргызча</option><option>Орусча</option></select>
+</div>
+<button class="primary" onclick="generate()">✨ Даярдоо</button>
+<p class="small">ИИ сервери азырынча туташтырыла элек.</p>
+</div>
+<div class="panel">
+<h2>📄 Натыйжа</h2>
+<div class="output" id="result">Даяр болгон текст бул жерде чыгат.</div>
+<button class="secondary" onclick="copyResult()">📋 Көчүрүү</button>
+</div>
+</main>
+<footer>KGFOOTBALLTV © 2026</footer>
+<script>
+let mode="translate";
+function setMode(value,button){
+mode=value;
+document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+let options=document.getElementById("options");
+if(mode==="translate"){
+options.innerHTML='<label>Котормо тили</label><select id="option"><option>Кыргызча</option><option>Орусча</option></select>';
+}else if(mode==="reels"){
+options.innerHTML='<label>Видео узактыгы</label><select id="option"><option>30 секунд</option><option>45 секунд</option><option>60 секунд</option></select>';
+}else{
+options.innerHTML='<label>Пост форматы</label><select id="option"><option>Instagram пост</option><option>Кыска заголовок</option><option>Telegram пост</option></select>';
+}
+}
+function generate(){
+let source=document.getElementById("source").value.trim();
+if(!source){alert("Адегенде текст киргиз!");return;}
+document.getElementById("result").textContent="Текст кабыл алынды!\n\nИИ функциясын кийинки кадамда туташтырабыз.";
+}
+function copyResult(){
+navigator.clipboard.writeText(document.getElementById("result").innerText).then(()=>alert("Көчүрүлдү!"));
+}
+</script>
+</body>
+</html>
