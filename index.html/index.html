@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,71 +7,99 @@
 <title>KGFOOTBALLTV AI</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080d18;color:white;font-family:Arial,sans-serif}
-header{padding:22px 6%;background:#101a2d;border-bottom:1px solid #263957}
-.logo{font-size:25px;font-weight:900;color:#fff}
-.logo span{color:#258cff}
-header p{color:#9eacc3;margin-bottom:0}
-main{max-width:1000px;margin:35px auto;padding:0 18px}
-.hero{text-align:center;padding:35px 10px}
-.hero h1{font-size:36px;margin:0 0 12px}
-.hero h1 span{color:#258cff}
-.hero p{color:#aab7ca}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.card{background:#111d31;border:1px solid #263957;border-radius:16px;padding:22px}
-.card h2{font-size:20px;margin-top:0}
-.card p{color:#9eacc3;font-size:14px}
-textarea,select{width:100%;background:#080f1d;color:white;border:1px solid #344765;border-radius:9px;padding:13px;margin:10px 0;font-size:15px}
-textarea{min-height:130px;resize:vertical}
-button{width:100%;background:#1678ed;color:white;border:0;border-radius:9px;padding:14px;font-size:16px;font-weight:bold;cursor:pointer}
-button:hover{background:#0861c9}
-.result{white-space:pre-wrap;background:#080f1d;border-radius:9px;padding:13px;margin-top:14px;color:#dce8fa;min-height:45px}
-footer{text-align:center;color:#75849d;padding:35px}
+body{margin:0;background:#080d18;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 18px;text-align:center;background:linear-gradient(135deg,#101d38,#172d55);border-bottom:2px solid #168cff}
+.logo{font-size:27px;font-weight:900;letter-spacing:1px}
+.logo span{color:#168cff}
+header p{color:#aebbd0;font-size:13px}
+main{max-width:760px;margin:24px auto;padding:0 15px}
+.panel{background:#111a2b;border:1px solid #263b5d;border-radius:16px;padding:18px;margin-bottom:16px}
+h2{font-size:19px;margin:0 0 15px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+button,select{cursor:pointer}
+.tab{padding:13px 5px;border:1px solid #29456c;border-radius:10px;background:#14233b;color:white;font-weight:bold}
+.tab.active{background:#087eea;border-color:#087eea}
+label{display:block;margin:14px 0 7px;color:#b8c8df;font-size:13px}
+textarea,select{width:100%;background:#091323;color:white;border:1px solid #304664;border-radius:10px;padding:13px;font-size:15px}
+textarea{min-height:155px;resize:vertical}
+select{height:45px}
+.primary{width:100%;padding:15px;border:0;border-radius:10px;background:linear-gradient(90deg,#087eea,#174fbd);color:white;font-weight:bold;font-size:16px;margin-top:15px}
+.secondary{padding:11px 16px;border:1px solid #3c5c85;border-radius:9px;background:#172944;color:white}
+.output{min-height:120px;white-space:pre-wrap;line-height:1.6;color:#e5edfa}
+.small{font-size:12px;color:#8193ad;line-height:1.5}
+footer{text-align:center;color:#687b99;padding:20px;font-size:12px}
 </style>
 </head>
 <body>
 <header>
- <div class="logo">KG<span>FOOTBALL</span>TV</div>
- <p>Кыргыз футбол жаңылыктары үчүн AI студиясы</p>
+  <div class="logo">KG<span>FOOTBALL</span>TV AI</div>
+  <p>Футбол жаңылыктары үчүн жасалма интеллект жардамчысы</p>
 </header>
+
 <main>
- <section class="hero">
-  <h1>FOOTBALL <span>AI STUDIO</span></h1>
-  <p>Футбол контентин даярдоо эми оңой!</p>
- </section>
- <section class="tools">
-  <div class="card">
-   <h2>⚽ Кыргызча котормо</h2>
-   <p>Футбол жаңылыгын бул жерге киргиз.</p>
-   <textarea id="news" placeholder="Вставь футбольную новость..."></textarea>
-   <button onclick="generate('translate')">Кыргызча которуу</button>
-   <div class="result" id="translation">Натыйжа бул жерде чыгат.</div>
+  <div class="panel">
+    <h2>⚽ Контент даярдоо</h2>
+    <div class="tabs">
+      <button class="tab active" onclick="setMode('translate',this)">🇰🇬 Котормо</button>
+      <button class="tab" onclick="setMode('reels',this)">🎬 Reels</button>
+      <button class="tab" onclick="setMode('post',this)">📰 Пост</button>
+    </div>
+
+    <label>Текстти киргиз</label>
+    <textarea id="source" placeholder="Футбол жаңылыгын ушул жерге кой..."></textarea>
+
+    <div id="options">
+      <label>Котормо тили</label>
+      <select id="language">
+        <option value="Кыргызча">Кыргызча</option>
+        <option value="Орусча">Орусча</option>
+      </select>
+    </div>
+
+    <button class="primary" onclick="generate()">✨ Даярдоо</button>
+    <p class="small">ИИ функциясын иштетүү үчүн коопсуз серверди кийинки кадамда туташтырабыз.</p>
   </div>
-  <div class="card">
-   <h2>🎬 Reels сценарийи</h2>
-   <p>Темаңды жаз, видео сценарийин даярда.</p>
-   <textarea id="topic" placeholder="Например: Холанд против Мбаппе..."></textarea>
-   <select id="duration">
-    <option value="30 секунд">30 секунд</option>
-    <option value="45 секунд">45 секунд</option>
-    <option value="60 секунд">60 секунд</option>
-   </select>
-   <button onclick="generate('script')">Сценарий түзүү</button>
-   <div class="result" id="script">Сценарий бул жерде чыгат.</div>
+
+  <div class="panel">
+    <h2>📄 Натыйжа</h2>
+    <div class="output" id="result">Даяр болгон текст бул жерде чыгат.</div>
+    <button class="secondary" onclick="copyResult()">📋 Көчүрүү</button>
   </div>
-  <div class="card">
-   <h2>📰 Пост жана заголовок</h2>
-   <p>Пост үчүн кызыктуу аталыш даярда.</p>
-   <textarea id="post" placeholder="Футбол жаңылыгын киргиз..."></textarea>
-   <button onclick="generate('post')">Заголовок түзүү</button>
-   <div class="result" id="postresult">Натыйжа бул жерде чыгат.</div>
-  </div>
- </section>
 </main>
-<footer>© 2026 KGFOOTBALLTV — Football Media Studio</footer>
+
+<footer>KGFOOTBALLTV © 2026</footer>
+
 <script>
-function generate(type){
- alert("AI азырынча туташтырыла элек. Кийинки кадамда OpenAI API кошобуз!");
+let mode="translate";
+
+function setMode(value,button){
+  mode=value;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+
+  const options=document.getElementById("options");
+  if(mode==="translate"){
+    options.innerHTML='<label>Котормо тили</label><select id="language"><option value="Кыргызча">Кыргызча</option><option value="Орусча">Орусча</option></select>';
+    document.getElementById("source").placeholder="Футбол жаңылыгын киргиз...";
+  }else if(mode==="reels"){
+    options.innerHTML='<label>Видео узактыгы</label><select id="language"><option>30 секунд</option><option>45 секунд</option><option>60 секунд</option></select>';
+    document.getElementById("source").placeholder="Видео үчүн футбол темасын же жаңылыкты киргиз...";
+  }else{
+    options.innerHTML='<label>Пост форматы</label><select id="language"><option>Instagram пост</option><option>Кыска заголовок</option><option>Telegram пост</option></select>';
+    document.getElementById("source").placeholder="Пост үчүн футбол жаңылыгын киргиз...";
+  }
+}
+
+function generate(){
+  const source=document.getElementById("source").value.trim();
+  if(!source){alert("Адегенде текст киргиз!");return;}
+  document.getElementById("result").textContent=
+    "Текст кабыл алынды!\n\nKGFOOTBALLTV AI сервери азырынча туташтырыла элек. Кийинки кадамда ИИни кошобуз.";
+}
+
+function copyResult(){
+  const text=document.getElementById("result").innerText;
+  navigator.clipboard.writeText(text).then(()=>alert("Көчүрүлдү!"));
 }
 </script>
 </body>
